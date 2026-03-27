@@ -27,21 +27,6 @@
             border: 1px solid #e0e0e0;
         }
         
-        #lighting-controls {
-            position: absolute; 
-            top: 10px;
-            right: 20px;
-            background: rgba(255,255,255,0.92);
-            padding: 12px;
-            border-radius: 10px;
-            z-index: 100; 
-            width: 190px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border: 1px solid #e0e0e0;
-            max-height: calc(100vh - 20px);
-            overflow-y: auto;
-        }
-        
         #loading {
             position: absolute; 
             top: 50%; 
@@ -73,64 +58,10 @@
             transform: translateY(-1px);
         }
         
-        #status {
-            margin-top: 12px; 
-            padding: 8px;
-            background: #f8f8f8; 
-            border-radius: 6px; 
-            font-size: 13px;
-            border: 1px solid #eee;
-        }
-        
-        .control-group {
-            margin-bottom: 12px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        
-        .control-group:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        
-        .control-group h4 {
-            margin: 0 0 8px 0;
-            font-size: 14px;
-            color: #300f7c;
-            font-weight: 600;
-        }
-        
-        .slider-container {
-            margin-bottom: 8px;
-        }
-        
-        .slider-container label {
-            display: block;
-            margin-bottom: 4px;
-            font-size: 12px;
-            color: #666;
-        }
-        
-        .slider-container input[type="range"] {
-            width: 100%;
-            height: 4px;
-            accent-color: #300f7c;
-        }
-        
-        .color-picker {
-            width: 100%;
-            height: 25px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        
         .capture-buttons {
             display: flex;
             gap: 6px;
-            margin: 10px 0 0 0;
+            margin: 10px 0;
         }
         
         .capture-btn {
@@ -140,11 +71,22 @@
             padding: 5px !important;
         }
         
-        .transparent-btn {
-            background: #33343a !important;
-            margin-top: 5px;
+        .slider-container {
+            margin: 12px 0 8px 0;
+        }
+        
+        .slider-container label {
+            display: block;
+            margin-bottom: 4px;
             font-size: 12px;
-            padding: 6px;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .slider-container input[type="range"] {
+            width: 100%;
+            height: 4px;
+            accent-color: #300f7c;
         }
         
         .value-display {
@@ -171,17 +113,6 @@
                 display: none;
             }
             
-            #lighting-controls {
-                width: 90%;
-                right: auto;
-                left: 50%;
-                transform: translateX(-50%);
-                bottom: 60px;
-                max-height: 40vh;
-                overflow-y: auto;
-                display: none;
-            }
-            
             .mobile-control-btn {
                 display: block !important;
                 position: fixed;
@@ -201,11 +132,6 @@
                 left: 10px;
                 top: 10px;
             }
-            
-            #toggleLightingBtn {
-                right: 10px;
-                top: 10px;
-            }
         }
     </style>
 </head>
@@ -218,76 +144,20 @@
             <button id="captureJpgBtn" class="capture-btn">JPG</button>
             <button id="captureVideoBtn" class="capture-btn">360° Video</button>
         </div>
-        <div id="status">Cargando modelo...</div>
-    </div>
-
-    <div id="lighting-controls">
-        <h3 style="margin:0 0 12px 0; font-size:15px; color:#333;">Controles de Visualización</h3>
         
-        <div class="control-group">
-            <h4>Luz Ambiental</h4>
-            <div class="slider-container">
-                <label for="ambientIntensity">Intensidad</label>
-                <input type="range" id="ambientIntensity" min="0" max="2" step="0.1" value="0.2">
-                <div class="value-display"><span id="ambientIntensityValue">0.2</span></div>
-            </div>
-            <label for="ambientColor">Color:</label>
-            <input type="color" id="ambientColor" class="color-picker" value="#ffffff">
+        <div class="slider-container">
+            <label for="lightPosZ">Luz - Posición Z</label>
+            <input type="range" id="lightPosZ" min="-10" max="10" step="0.5" value="5">
+            <div class="value-display"><span id="lightPosZValue">5.0</span></div>
         </div>
-        
-        <div class="control-group">
-            <h4>Luz Direccional</h4>
-            <div class="slider-container">
-                <label for="directionalIntensity">Intensidad</label>
-                <input type="range" id="directionalIntensity" min="0" max="2" step="0.1" value="0.5">
-                <div class="value-display"><span id="directionalIntensityValue">0.5</span></div>
-            </div>
-            <label for="directionalColor">Color:</label>
-            <input type="color" id="directionalColor" class="color-picker" value="#ffffff">
-            
-            <div class="slider-container">
-                <label for="lightPosX">Posición X</label>
-                <input type="range" id="lightPosX" min="-10" max="10" step="0.5" value="3">
-                <div class="value-display"><span id="lightPosXValue">3.0</span></div>
-            </div>
-            <div class="slider-container">
-                <label for="lightPosY">Posición Y</label>
-                <input type="range" id="lightPosY" min="0" max="20" step="0.5" value="10">
-                <div class="value-display"><span id="lightPosYValue">10.0</span></div>
-            </div>
-            <div class="slider-container">
-                <label for="lightPosZ">Posición Z</label>
-                <input type="range" id="lightPosZ" min="-10" max="10" step="0.5" value="5">
-                <div class="value-display"><span id="lightPosZValue">5.0</span></div>
-            </div>
-        </div>
-        
-        <div class="control-group">
-            <h4>Materiales</h4>
-            <div class="slider-container">
-                <label for="roughness">Reflejos</label>
-                <input type="range" id="roughness" min="0" max="3" step="0.05" value="2">
-                <div class="value-display"><span id="roughnessValue">2</span></div>
-            </div>
-        </div>
-        
-        <div class="control-group">
-            <h4>Fondo</h4>
-            <label for="backgroundColor">Color:</label>
-            <input type="color" id="backgroundColor" class="color-picker" value="#f0f0f0">
-            <button id="transparentBgBtn" class="transparent-btn">Fondo Transparente</button>
-        </div>
-        
-        <button id="resetLightingBtn" style="margin-top:8px;">Restablecer Valores</button>
     </div>
 
     <div id="loading">Cargando modelo 3D...</div>
 
     <button id="toggleMainBtn" class="mobile-control-btn">☰</button>
-    <button id="toggleLightingBtn" class="mobile-control-btn">⚙️</button>
 
     <script>
-        // 1. Configuración inicial de Three.js
+        // Configuración inicial de Three.js
         const renderer = new THREE.WebGLRenderer({ 
             antialias: true,
             powerPreference: "high-performance",
@@ -303,7 +173,6 @@
         scene.background = new THREE.Color(0xf0f0f0);
 
         document.getElementById('loading').style.display = 'block';
-        document.getElementById('status').textContent = 'Cargando modelo...';
 
         // Cargar fondo.jpg si existe
         new THREE.TextureLoader().load('fondo.jpg', 
@@ -311,12 +180,9 @@
                 texture.generateMipmaps = false;
                 texture.minFilter = THREE.LinearFilter;
                 scene.background = texture;
-                console.log("Fondo cargado correctamente");
             },
             undefined,
-            (error) => {
-                console.error("Error cargando fondo:", error);
-            }
+            (error) => { console.error("Error cargando fondo:", error); }
         );
 
         // Entorno de reflejos básico
@@ -325,14 +191,13 @@
         scene.environment = envTexture;
 
         // ===== SISTEMA DE ILUMINACIÓN =====
-        // Limpiar luces existentes
         scene.children = scene.children.filter(child => !(child instanceof THREE.Light));
 
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.15);
         scene.add(ambientLight);
 
         const mainLight = new THREE.DirectionalLight(0xffffff, 0.9);
-        mainLight.position.set(3, 5, 2);
+        mainLight.position.set(3, 5, 5); // valor inicial Z=5
         scene.add(mainLight);
 
         const fillLight = new THREE.DirectionalLight(0xffffff, 0.6);
@@ -349,7 +214,7 @@
             -5 * aspect, 5 * aspect, 5, -5, 0.1, 1000
         );
         camera.position.set(0, 1.5, 5);
-        camera.zoom = 10;
+        camera.zoom = 9;
         camera.updateProjectionMatrix();
 
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -359,14 +224,13 @@
 
         let model = null;
         const loader = new THREE.GLTFLoader();
-        let targetTextures = []; // Mantenemos array por si queremos futuras modificaciones, pero sin interfaz de edición
+        let targetTextures = [];
 
         // Cargar modelo
         loader.load('modelo.glb', function(gltf) {
             model = gltf.scene;
             scene.add(model);
         
-            // Configurar materiales y capturar texturas para posible uso futuro (sin edición)
             model.traverse((node) => {
                 if (node.isMesh) {
                     node.castShadow = false;
@@ -386,7 +250,6 @@
                     }
                 }
                 
-                // Registrar texturas objetivo si existen (no se usan para edición ahora)
                 if (node.isMesh && node.material && node.material.map) {
                     const texture = node.material.map;
                     const meshName = node.name || '';
@@ -417,7 +280,7 @@
             
             document.getElementById('loading').style.display = 'none';
             
-            // Aplicar diseño_base.jpg automáticamente si existe
+            // Aplicar diseño_base.jpg automáticamente
             new THREE.TextureLoader().load('diseño_base.jpg', 
                 function(texture) {
                     texture.flipY = false;
@@ -441,19 +304,15 @@
                         }
                     });
                     
-                    updateStatus("Diseño base aplicado correctamente");
                     renderer.render(scene, camera);
                 }, 
                 undefined, 
                 function(error) {
                     console.warn("No se encontró diseño_base.jpg - Usando texturas originales");
-                    updateStatus("AVISO: Diseño base no encontrado", false);
                 }
             );
-            
-            updateStatus("Modelo cargado correctamente");
 
-            // Ajustar cámara
+            // Ajustar cámara al modelo
             const box = new THREE.Box3().setFromObject(model);
             const center = box.getCenter(new THREE.Vector3());
             const size = box.getSize(new THREE.Vector3());
@@ -465,23 +324,13 @@
 
         }, undefined, function(error) {
             console.error("Error:", error);
-            updateStatus("Error al cargar el modelo", true);
+            document.getElementById('loading').style.display = 'none';
         });
-
-        function updateStatus(message, isError = false) {
-            const statusElement = document.getElementById('status');
-            statusElement.textContent = message;
-            statusElement.style.color = isError ? 'red' : 'inherit';
-        }
 
         // Captura de imágenes
         function captureImage(format) {
-            if (!model) {
-                updateStatus("No hay modelo cargado", true);
-                return;
-            }
+            if (!model) return;
 
-            // Guardar configuración actual
             const currentBackground = scene.background;
             const currentClearAlpha = renderer.getClearAlpha();
             const originalSize = {
@@ -489,19 +338,16 @@
                 height: renderer.domElement.height
             };
             
-            // Configurar para captura de alta calidad
             const scaleFactor = 2;
             const tempWidth = window.innerWidth * scaleFactor;
             const tempHeight = window.innerHeight * scaleFactor;
             
             renderer.setSize(tempWidth, tempHeight, false);
             camera.aspect = tempWidth / tempHeight;
-            
             if (camera.isOrthographicCamera) {
                 camera.left = -5 * camera.aspect;
                 camera.right = 5 * camera.aspect;
             }
-            
             camera.updateProjectionMatrix();
             
             if (format === 'png') {
@@ -527,7 +373,6 @@
                 dataUrl = tempCanvas.toDataURL('image/jpeg', 0.95);
             }
             
-            // Restaurar
             renderer.setSize(originalSize.width, originalSize.height);
             camera.aspect = originalSize.width / originalSize.height;
             if (camera.isOrthographicCamera) {
@@ -545,20 +390,14 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            
-            updateStatus(`Captura guardada: ${filename}`);
         }
 
         // Captura de video 360°
         document.getElementById('captureVideoBtn').addEventListener('click', async function() {
-            if (!model) {
-                updateStatus("❌ No hay modelo cargado", true);
-                return;
-            }
+            if (!model) return;
 
             const btn = this;
             btn.disabled = true;
-            updateStatus("🚀 Iniciando grabación...");
 
             try {
                 const duration = 8;
@@ -571,10 +410,7 @@
                 const captureCanvas = document.createElement('canvas');
                 captureCanvas.width = width;
                 captureCanvas.height = height;
-                const ctx = captureCanvas.getContext('2d', {
-                    willReadFrequently: true,
-                    alpha: false
-                });
+                const ctx = captureCanvas.getContext('2d', { willReadFrequently: true, alpha: false });
 
                 const stream = captureCanvas.captureStream(fps);
                 let mimeType = 'video/webm';
@@ -645,14 +481,7 @@
                     frameCount++;
                     const currentFPS = 1000 / (now - lastFrameTime);
                     lastFrameTime = now;
-                    
                     if (currentFPS < fps * 0.9) droppedFrames++;
-                    
-                    if (frameCount % 10 === 0) {
-                        updateStatus(
-                            `🔄 ${Math.floor(progress * 100)}% | FPS: ${currentFPS.toFixed(1)}/${fps} | Dropped: ${droppedFrames}`
-                        );
-                    }
                     
                     if (progress < 1) {
                         const nextFrameTime = startTime + (frameCount * frameDelay);
@@ -666,43 +495,28 @@
                 }
 
                 const videoChunks = [];
-                recorder.ondataavailable = (e) => {
-                    if (e.data.size > 0) videoChunks.push(e.data);
-                };
-                
+                recorder.ondataavailable = (e) => { if (e.data.size > 0) videoChunks.push(e.data); };
                 recorder.onstop = async () => {
                     if (videoChunks.length === 0) {
-                        updateStatus("❌ Error: No se capturaron datos", true);
                         btn.disabled = false;
                         return;
                     }
-                    
-                    updateStatus("🎬 Finalizando video...");
-                    
-                    try {
-                        const blob = new Blob(videoChunks, { type: mimeType });
-                        const url = URL.createObjectURL(blob);
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.download = `360-${new Date().toISOString().slice(0,10)}.webm`;
-                        link.style.display = 'none';
-                        document.body.appendChild(link);
-                        link.click();
-                        setTimeout(() => {
-                            document.body.removeChild(link);
-                            URL.revokeObjectURL(url);
-                            updateStatus(`✅ Video listo! | Frames: ${frameCount} | ${(blob.size / 1024 / 1024).toFixed(2)} MB`);
-                            btn.disabled = false;
-                        }, 100);
-                    } catch (error) {
-                        console.error("Error al generar el video:", error);
-                        updateStatus(`❌ Error final: ${error.message}`, true);
+                    const blob = new Blob(videoChunks, { type: mimeType });
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `360-${new Date().toISOString().slice(0,10)}.webm`;
+                    link.style.display = 'none';
+                    document.body.appendChild(link);
+                    link.click();
+                    setTimeout(() => {
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
                         btn.disabled = false;
-                    }
+                    }, 100);
                 };
                 
                 // Precalentar
-                updateStatus("🔥 Pre-renderizando...");
                 await new Promise(resolve => {
                     let preheatCount = 0;
                     const preheat = () => {
@@ -719,15 +533,11 @@
                 renderFrame(startTime);
                 
                 setTimeout(() => {
-                    if (recorder.state === 'recording') {
-                        updateStatus("⏳ Finalizando grabación...");
-                        recorder.stop();
-                    }
+                    if (recorder.state === 'recording') recorder.stop();
                 }, duration * 1000 + 3000);
 
             } catch (error) {
-                console.error("Error crítico:", error);
-                updateStatus(`💥 Error grave: ${error.message}`, true);
+                console.error(error);
                 btn.disabled = false;
             }
         });
@@ -757,7 +567,7 @@
                 camera.position.lerpVectors(startPosition, targetPosition, eased);
                 controls.target.lerpVectors(startTarget, center, eased);
                 controls.update();
-                camera.zoom = THREE.MathUtils.lerp(startZoom, 10, eased);
+                camera.zoom = THREE.MathUtils.lerp(startZoom, 9, eased);
                 camera.updateProjectionMatrix();
                 
                 if (progress < 1) requestAnimationFrame(animateCameraReset);
@@ -768,118 +578,18 @@
         document.getElementById('capturePngBtn').addEventListener('click', () => captureImage('png'));
         document.getElementById('captureJpgBtn').addEventListener('click', () => captureImage('jpeg'));
 
-        // Controles de iluminación
-        document.getElementById('ambientIntensity').addEventListener('input', function(e) {
-            const value = parseFloat(e.target.value);
-            ambientLight.intensity = value;
-            document.getElementById('ambientIntensityValue').textContent = value.toFixed(1);
-            renderer.render(scene, camera);
-        });
-        document.getElementById('ambientColor').addEventListener('input', function(e) {
-            ambientLight.color.set(e.target.value);
-            renderer.render(scene, camera);
-        });
-        document.getElementById('directionalIntensity').addEventListener('input', function(e) {
-            const value = parseFloat(e.target.value);
-            mainLight.intensity = value;
-            document.getElementById('directionalIntensityValue').textContent = value.toFixed(1);
-            renderer.render(scene, camera);
-        });
-        document.getElementById('directionalColor').addEventListener('input', function(e) {
-            mainLight.color.set(e.target.value);
-            renderer.render(scene, camera);
-        });
-        document.getElementById('lightPosX').addEventListener('input', function(e) {
-            const value = parseFloat(e.target.value);
-            mainLight.position.x = value;
-            document.getElementById('lightPosXValue').textContent = value.toFixed(1);
-            renderer.render(scene, camera);
-        });
-        document.getElementById('lightPosY').addEventListener('input', function(e) {
-            const value = parseFloat(e.target.value);
-            mainLight.position.y = value;
-            document.getElementById('lightPosYValue').textContent = value.toFixed(1);
-            renderer.render(scene, camera);
-        });
-        document.getElementById('lightPosZ').addEventListener('input', function(e) {
+        // Control de luz Z
+        const lightPosZSlider = document.getElementById('lightPosZ');
+        const lightPosZValue = document.getElementById('lightPosZValue');
+        
+        lightPosZSlider.addEventListener('input', function(e) {
             const value = parseFloat(e.target.value);
             mainLight.position.z = value;
-            document.getElementById('lightPosZValue').textContent = value.toFixed(1);
-            renderer.render(scene, camera);
-        });
-        document.getElementById('roughness').addEventListener('input', function(e) {
-            const value = parseFloat(e.target.value);
-            if (model) {
-                model.traverse((node) => {
-                    if (node.isMesh && node.material) {
-                        node.material.roughness = value;
-                        node.material.needsUpdate = true;
-                    }
-                });
-            }
-            document.getElementById('roughnessValue').textContent = value.toFixed(2);
-            renderer.render(scene, camera);
-        });
-        document.getElementById('backgroundColor').addEventListener('input', function(e) {
-            scene.background = new THREE.Color(e.target.value);
-            renderer.setClearAlpha(1);
-            renderer.render(scene, camera);
-        });
-        document.getElementById('transparentBgBtn').addEventListener('click', function() {
-            scene.background = null;
-            renderer.setClearAlpha(0);
-            renderer.render(scene, camera);
-        });
-        document.getElementById('resetLightingBtn').addEventListener('click', function() {
-            ambientLight.intensity = 0.15;
-            ambientLight.color.set('#ffffff');
-            mainLight.intensity = 0.9;
-            mainLight.color.set('#ffffff');
-            mainLight.position.set(3, 5, 2);
-            fillLight.intensity = 0.6;
-            backLight.intensity = 0.4;
-            
-            if (model) {
-                model.traverse((node) => {
-                    if (node.isMesh && node.material) {
-                        node.material.roughness = 2;
-                        node.material.needsUpdate = true;
-                    }
-                });
-            }
-            
-            new THREE.TextureLoader().load('fondo.jpg', 
-                (texture) => {
-                    texture.generateMipmaps = false;
-                    texture.minFilter = THREE.LinearFilter;
-                    scene.background = texture;
-                    renderer.setClearAlpha(1);
-                },
-                undefined,
-                () => { scene.background = new THREE.Color(0xf0f0f0); renderer.setClearAlpha(1); }
-            );
-            
-            document.getElementById('ambientIntensity').value = 0.15;
-            document.getElementById('ambientColor').value = '#ffffff';
-            document.getElementById('directionalIntensity').value = 0.9;
-            document.getElementById('directionalColor').value = '#ffffff';
-            document.getElementById('lightPosX').value = 3;
-            document.getElementById('lightPosY').value = 5;
-            document.getElementById('lightPosZ').value = 2;
-            document.getElementById('roughness').value = 2;
-            document.getElementById('backgroundColor').value = '#f0f0f0';
-            
-            document.getElementById('ambientIntensityValue').textContent = '0.15';
-            document.getElementById('directionalIntensityValue').textContent = '0.9';
-            document.getElementById('roughnessValue').textContent = '2';
-            document.getElementById('lightPosXValue').textContent = '3';
-            document.getElementById('lightPosYValue').textContent = '5';
-            document.getElementById('lightPosZValue').textContent = '2';
-            
+            lightPosZValue.textContent = value.toFixed(1);
             renderer.render(scene, camera);
         });
 
-        // Animación y resize
+        // Animación
         function animate() {
             requestAnimationFrame(animate);
             controls.update();
@@ -887,6 +597,7 @@
         }
         animate();
 
+        // Resize
         window.addEventListener('resize', function() {
             const aspect = window.innerWidth / window.innerHeight;
             camera.left = -5 * aspect;
@@ -897,39 +608,25 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // Controles móviles
-        function setupMobileControls() {
-            const toggleMainBtn = document.getElementById('toggleMainBtn');
-            const toggleLightingBtn = document.getElementById('toggleLightingBtn');
-            const controlsPanel = document.getElementById('controls');
-            const lightingPanel = document.getElementById('lighting-controls');
-            
-            if (toggleMainBtn && toggleLightingBtn && controlsPanel && lightingPanel) {
-                toggleMainBtn.addEventListener('click', () => {
-                    controlsPanel.style.display = controlsPanel.style.display === 'none' ? 'block' : 'none';
-                    if (controlsPanel.style.display === 'block') lightingPanel.style.display = 'none';
-                });
-                toggleLightingBtn.addEventListener('click', () => {
-                    lightingPanel.style.display = lightingPanel.style.display === 'none' ? 'block' : 'none';
-                    if (lightingPanel.style.display === 'block') controlsPanel.style.display = 'none';
-                });
-                
-                function handleMobileLayout() {
-                    const isMobile = window.innerWidth <= 768;
-                    if (isMobile) {
-                        controlsPanel.style.display = 'none';
-                        lightingPanel.style.display = 'none';
-                    } else {
-                        controlsPanel.style.display = 'block';
-                        lightingPanel.style.display = 'block';
-                    }
+        // Control móvil para mostrar/ocultar panel principal
+        const toggleMainBtn = document.getElementById('toggleMainBtn');
+        const controlsPanel = document.getElementById('controls');
+        if (toggleMainBtn && controlsPanel) {
+            toggleMainBtn.addEventListener('click', () => {
+                controlsPanel.style.display = controlsPanel.style.display === 'none' ? 'block' : 'none';
+            });
+            function handleMobileLayout() {
+                const isMobile = window.innerWidth <= 768;
+                if (isMobile) {
+                    controlsPanel.style.display = 'none';
+                } else {
+                    controlsPanel.style.display = 'block';
                 }
-                window.addEventListener('load', handleMobileLayout);
-                window.addEventListener('resize', handleMobileLayout);
-                handleMobileLayout();
             }
+            window.addEventListener('load', handleMobileLayout);
+            window.addEventListener('resize', handleMobileLayout);
+            handleMobileLayout();
         }
-        document.addEventListener('DOMContentLoaded', setupMobileControls);
     </script>
 </body>
 </html>
